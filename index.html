@@ -8,23 +8,23 @@
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            padding: 4px; /* Padding layar diperkecil drastis */
+            padding: 4px;
             font-family: Arial, sans-serif;
             background-color: #1a252f;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Membiarkan layar bisa di-scroll ke bawah */
+            min-height: 100vh;
         }
         
         /* Setelan Bingkai Atas */
         .bingkai-header {
             background-color: #2c3e50;
-            padding: 6px; /* Dibuat sangat tipis */
+            padding: 6px;
             text-align: center;
             border: 1px solid #3498db;
             border-radius: 5px;
-            margin-bottom: 4px; /* Jarak bawah sangat tipis */
+            margin-bottom: 4px;
         }
         .bingkai-header h1 {
             margin: 2px 0;
@@ -38,7 +38,7 @@
         .dashboard-container {
             display: flex;
             flex-direction: row;
-            gap: 4px; /* Jarak pembatas antar jurusan ditipiskan */
+            gap: 4px;
             flex: 1;
         }
 
@@ -59,22 +59,44 @@
             padding: 5px;
             font-weight: bold;
             font-size: 12px;
+            z-index: 10; /* Menjaga agar judul tetap di lapisan atas */
+            position: relative;
         }
 
+        /* Wadah khusus untuk mengunci ukuran iframe */
+        .wadah-iframe {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Setelan dasar Iframe */
         iframe { 
-            flex: 1; 
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%; 
+            height: 100%;
             border: none; 
         }
 
-        /* Setelan Layar HP */
+        /* TRIK ZOOM OUT: Khusus untuk layar HP */
         @media (max-width: 768px) {
             .dashboard-container {
                 flex-direction: column;
             }
             .kolom {
-                height: 90vh; /* KUNCI: Setiap jurusan mengambil 90% tinggi layar HP */
+                height: 85vh; /* Menyediakan ruang vertikal yang cukup */
                 margin-bottom: 6px;
+            }
+            
+            iframe {
+                width: 200%;      /* Lebar dipaksa 2 kali lipat agar layout dinas mekar */
+                height: 200%;     /* Tinggi dipaksa 2 kali lipat untuk kompensasi zoom */
+                transform: scale(0.5); /* Tampilan disusutkan menjadi 50% (Zoom Out) */
+                transform-origin: 0 0; /* Titik pusat zoom dari pojok kiri atas */
             }
         }
     </style>
@@ -87,19 +109,28 @@
     </div>
 
     <div class="dashboard-container">
+        <!-- Kolom RPL -->
         <div class="kolom">
             <div class="judul-jurusan">💻 RPL</div>
-            <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/65/simple" title="RPL"></iframe>
+            <div class="wadah-iframe">
+                <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/65/simple" title="RPL"></iframe>
+            </div>
         </div>
         
+        <!-- Kolom DPIB -->
         <div class="kolom">
             <div class="judul-jurusan">📐 DPIB</div>
-            <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/64/simple" title="DPIB"></iframe>
+            <div class="wadah-iframe">
+                <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/64/simple" title="DPIB"></iframe>
+            </div>
         </div>
         
+        <!-- Kolom KKKR / KRIYA -->
         <div class="kolom">
             <div class="judul-jurusan">🧱 KKKR / KRIYA</div>
-            <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/66/simple" title="KKKR"></iframe>
+            <div class="wadah-iframe">
+                <iframe src="https://yogyaprov.spmb.id/020301/hasil/1000083/seleksi/66/simple" title="KKKR"></iframe>
+            </div>
         </div>
     </div>
 
